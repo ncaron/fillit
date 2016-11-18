@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 15:08:32 by Niko              #+#    #+#             */
-/*   Updated: 2016/11/16 20:46:39 by Niko             ###   ########.fr       */
+/*   Updated: 2016/11/16 22:01:48 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 int	main(int argc, char **argv)
 {
 	if (argc == 2)
-		reader(argv[1]);
+	{
+		if (reader(argv[1]) < 0)
+		{
+			ft_putstr("error\n");
+			exit(-1);
+		}
+	}
 	return (0);
 }
