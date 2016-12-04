@@ -6,11 +6,16 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/03 16:07:06 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/04 01:10:28 by Niko             ###   ########.fr       */
+/*   Updated: 2016/12/04 01:21:24 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
+
+/*
+** Prints a basic map.
+** Map size depends on smallest possible square.
+*/
 
 void	init_map(char **ts)
 {
