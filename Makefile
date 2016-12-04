@@ -6,7 +6,7 @@
 #    By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/16 15:11:47 by Niko              #+#    #+#              #
-#    Updated: 2016/12/04 00:26:06 by Niko             ###   ########.fr        #
+#    Updated: 2016/12/04 01:12:03 by Niko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ NAME = fillit
 FLAGS = -Wall -Wextra -Werror
 
 SRCS = srcs/main.c \
-	   srcs/reader.c
+	   srcs/reader.c \
+	   srcs/map.c
 
 INCLUDES = fillit.h
 

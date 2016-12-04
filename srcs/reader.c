@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:54:43 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/04 00:25:44 by Niko             ###   ########.fr       */
+/*   Updated: 2016/12/04 01:11:48 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,5 @@ void	reader(char *file)
 	free(tmp);
 	check_ts(ts);
 	check_conn(ts);
+	init_map(ts);
 }

@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 15:56:05 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/04 00:27:06 by Niko             ###   ########.fr       */
+/*   Updated: 2016/12/04 01:11:23 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@
 # include <fcntl.h>
 
 void	reader(char *file);
+void	init_map(char **ts);
 #endif
