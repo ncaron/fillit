@@ -6,27 +6,11 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:54:43 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/04 01:11:48 by Niko             ###   ########.fr       */
+/*   Updated: 2016/12/04 01:34:05 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
-
-/*
-** Called when the file is invalid.
-** Prints error and exits the program.
-*/
-
-void	invalid(int code)
-{
-	if (code == 1)
-		ft_putstr("open() error");
-	else if (code == 2)
-		ft_putstr("close() error");
-	else if (code == 3)
-		ft_putstr("error");
-	exit(-1);
-}
 
 /*
 ** Assigns each tetrimino in a tetrimino array.
@@ -66,7 +50,10 @@ void	check_ts(char **ts)
 	{
 		if (ft_countchr(ts[i], '.') != 12 || ft_countchr(ts[i], '#') != 4 ||
 				ft_countchr(ts[i], '\n') != 4)
-			invalid(3);
+		{
+			ft_putstr("error");
+			exit(-1);
+		}
 		i++;
 	}
 }
@@ -89,17 +76,17 @@ void	check_conn(char **ts)
 		j = 0;
 		while (ts[i][j])
 		{
-			if (ts[i][j] == '#')
-			{
-				if (ts[i][j + 1] == '#')
+			if (ts[i][j] == '#' && ts[i][j + 1] == '#')
 					count += 2;
-				if (i + 5 < 20 && ts[i][j + 5] == '#')
-					count += 2;
-			}
+			if (ts[i][j] == '#' && i + 5 < 20 && ts[i][j + 5] == '#')
+				count += 2;
 			j++;
 		}
 		if (count != 6 && count != 8)
-			invalid(3);
+		{
+			ft_putstr("error");
+			exit(-1);
+		}
 		i++;
 	}
 }
@@ -119,11 +106,17 @@ void	reader(char *file)
 	int		file_len;
 
 	if ((fd = open(file, O_RDONLY)) == -1)
-		invalid(1);
+	{
+		ft_putstr("open() error");
+		exit(-1);
+	}
 	tmp = ft_strnew(BUF_SIZE);
 	file_len = read(fd, tmp, BUF_SIZE);
 	if ((fd = close(fd)) == -1)
-		invalid(2);
+	{
+		ft_putstr("close() error");
+		exit(-1);
+	}
 	t_count = (file_len / 20) + 1;
 	ts = (char**)malloc(sizeof(char*) * (t_count + 1));
 	assign_ts(ts, tmp, file_len);
