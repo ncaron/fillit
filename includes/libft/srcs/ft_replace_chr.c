@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_replace_chr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/16 15:08:32 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/04 13:57:09 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/04 13:49:07 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/04 14:07:05 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
+/*
+** Replaces char c1 with char c2 in the string s.
+*/
 
-int	main(int argc, char **argv)
+#include "../libft.h"
+
+void	ft_replace_chr(char *s, char c1, char c2)
 {
-	char **ts;
+	int i;
 
-	if (argc == 2)
+	i = 0;
+	while (s[i])
 	{
-		ts = reader(argv[1]);
-		init_map(ts);
+		if (s[i] == c1)
+			s[i] = c2;
+		i++;
 	}
-	return (0);
 }

@@ -6,11 +6,12 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 20:54:43 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/04 01:34:05 by Niko             ###   ########.fr       */
+/*   Updated: 2016/12/04 14:01:21 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
+
 
 /*
 ** Assigns each tetrimino in a tetrimino array.
@@ -92,12 +93,32 @@ void	check_conn(char **ts)
 }
 
 /*
+** Changes hashes to letters.
+** A for the first piece, B for the second, etc.
+*/
+
+void	assign_letters(char **ts)
+{
+	int		i;
+	char	letter;
+
+	letter = 'A';
+	i = 0;
+	while (ts[i])
+	{
+		ft_replace_chr(ts[i], '#', letter);
+		letter++;
+		i++;
+	}
+}
+
+/*
 ** Opens, reads and closes a file.
 ** Calculates the length of the file. (Adds one incase of remainder)
 ** Calculates number of ts.
 */
 
-void	reader(char *file)
+char	**reader(char *file)
 {
 	char	*tmp;
 	char	**ts;
@@ -123,5 +144,6 @@ void	reader(char *file)
 	free(tmp);
 	check_ts(ts);
 	check_conn(ts);
-	init_map(ts);
+	assign_letters(ts);
+	return (ts);
 }
