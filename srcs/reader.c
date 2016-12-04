@@ -5,107 +5,129 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/16 15:06:25 by Niko              #+#    #+#             */
-/*   Updated: 2016/11/17 19:29:31 by Niko             ###   ########.fr       */
+/*   Created: 2016/11/21 20:54:43 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/04 00:25:44 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
 
 /*
-** Counts the number of tetriminos and total number of characters.
-** Assigns count and total to the array count_total that is passed in.
+** Called when the file is invalid.
+** Prints error and exits the program.
 */
 
-void	tetrimino_count(char *file, size_t len, int *count_total)
+void	invalid(int code)
+{
+	if (code == 1)
+		ft_putstr("open() error");
+	else if (code == 2)
+		ft_putstr("close() error");
+	else if (code == 3)
+		ft_putstr("error");
+	exit(-1);
+}
+
+/*
+** Assigns each tetrimino in a tetrimino array.
+*/
+
+void	assign_ts(char **ts, char *file, int file_len)
 {
 	int i;
+	int j;
+	int len;
+
+	i = 0;
+	j = 0;
+	while (i <= file_len)
+	{
+		if (file_len - i < 20)
+			len = file_len - i;
+		else
+			len = 20;
+		ts[j] = ft_strsub(file, i, len);
+		j++;
+		i += 21;
+	}
+	ts[j] = NULL;
+}
+
+/*
+** Checks if tetriminos have exactly 12 dots and 4 hashes.
+*/
+
+void	check_ts(char **ts)
+{
+	int i;
+
+	i = 0;
+	while (ts[i])
+	{
+		if (ft_countchr(ts[i], '.') != 12 || ft_countchr(ts[i], '#') != 4 ||
+				ft_countchr(ts[i], '\n') != 4)
+			invalid(3);
+		i++;
+	}
+}
+
+/*
+** Checks number of connections for the hashes.
+** If not 6 or 8, piece is not valid.
+*/
+
+void	check_conn(char **ts)
+{
+	int i;
+	int j;
 	int count;
-	int total;
 
-	len = ft_strlen(file);
 	i = 0;
-	count = 0;
-	total = 0;
-	while ((size_t)i <= len)
+	while (ts[i])
 	{
-		if ((file[i] == '\n' && file[i + 1] == '\n') || file[i] == '\0')
-			count++;
-		if (file[i] != '\n' && file[i] != '\0')
-			total++;
+		count = 0;
+		j = 0;
+		while (ts[i][j])
+		{
+			if (ts[i][j] == '#')
+			{
+				if (ts[i][j + 1] == '#')
+					count += 2;
+				if (i + 5 < 20 && ts[i][j + 5] == '#')
+					count += 2;
+			}
+			j++;
+		}
+		if (count != 6 && count != 8)
+			invalid(3);
 		i++;
 	}
-	count_total[0] = count;
-	count_total[1] = total;
 }
 
 /*
-** Checks if tetrimino count corresponds to character count.
-** Checks if all characters are only '.', '#' or '\n'.
-** Prints an error and exits the program if any of the tests fail.
+** Opens, reads and closes a file.
+** Calculates the length of the file. (Adds one incase of remainder)
+** Calculates number of ts.
 */
 
-void	check_valid_file(char *file, int *count_total)
+void	reader(char *file)
 {
-	int	i;
-	int invalid;
-
-	invalid = 0;
-	i = 0;
-	tetrimino_count(file, ft_strlen(file), count_total);
-	if (count_total[0] * 16 != count_total[1])
-		invalid = 1;
-	while (file[i] && !invalid)
-	{
-		if (file[i] == '\n' && file[i + 1] == '\n' && file[i + 2] == '\n')
-			invalid = 1;
-		if (file[i] != '.' && file[i] != '#' && file[i] != '\n')
-			invalid = 1;
-		i++;
-	}
-	if (invalid)
-	{
-		ft_putstr("error\n");
-		exit(-1);
-	}
-}
-
-/*
-** Will create an array of valid Tetriminos.
-*/
-
-void	assign_tetriminos(char *file)
-{
-	int		count_total[2];
-
-	tetrimino_count(file, ft_strlen(file), count_total);
-	check_valid_file(file, count_total);
-}
-
-/*
-** Opens and reads a file, assigning its contents to buf.
-*/
-
-int		reader(char *file)
-{
+	char	*tmp;
+	char	**ts;
+	int		t_count;
 	int		fd;
-	int		ret;
-	char	buf[BUF_SIZE + 1];
+	int		file_len;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_putstr("open() error");
-		exit(-1);
-	}
-	ret = read(fd, buf, BUF_SIZE);
-	buf[ret] = '\0';
-	if (close(fd) == -1)
-	{
-		ft_putstr("close() error");
-		exit(-1);
-	}
-	assign_tetriminos(buf);
-	ft_putstr("valid\n");
-	return (0);
+	if ((fd = open(file, O_RDONLY)) == -1)
+		invalid(1);
+	tmp = ft_strnew(BUF_SIZE);
+	file_len = read(fd, tmp, BUF_SIZE);
+	if ((fd = close(fd)) == -1)
+		invalid(2);
+	t_count = (file_len / 20) + 1;
+	ts = (char**)malloc(sizeof(char*) * (t_count + 1));
+	assign_ts(ts, tmp, file_len);
+	free(tmp);
+	check_ts(ts);
+	check_conn(ts);
 }

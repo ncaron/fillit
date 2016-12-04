@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_countchr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/02 23:09:47 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/02 22:37:34 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/03 13:23:50 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/03 13:31:34 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-** Returns the number of characters preceeding terminating character.
+** Counts the number of times c appears in s.
+** Returns the count.
 */
 
 #include "../libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_countchr(const char *s, char c)
 {
-	size_t i;
+	int count;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	count = 0;
+	while (*s)
+	{
+		if (*s == c)
+			count++;
+		s++;
+	}
+	return (count);
 }
