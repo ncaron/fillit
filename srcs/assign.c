@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/04 15:51:22 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/05 17:33:52 by Niko             ###   ########.fr       */
+/*   Updated: 2016/12/05 18:46:03 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,32 @@ void	assign_ts(char **ts, char *file, int file_len)
 		i += 21;
 	}
 	ts[j] = NULL;
+}
+
+/*
+** Removes the leading and trailing dots.
+*/
+
+void	trim_ts(char **ts)
+{
+	int i;
+	int start;
+	int end;
+	int len;
+
+	i = 0;
+	while (ts[i])
+	{
+		start = 0;
+		end = ft_strlen(ts[i]) - 1;
+		while (!ft_isupper(ts[i][start]))
+			start++;
+		while (!ft_isupper(ts[i][end]))
+			end--;
+		len = end - start + 1;
+		ts[i] = ft_strsub(ts[i], start, len);
+		i++;
+	}
 }
 
 /*
@@ -77,5 +103,6 @@ char	**assign(char *t_read)
 	assign_ts(ts, t_read, file_len);
 	validator(ts);
 	assign_letters(ts);
+	trim_ts(ts);
 	return (ts);
 }

@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/16 15:56:05 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/05 17:22:04 by Niko             ###   ########.fr       */
+/*   Updated: 2016/12/05 18:22:07 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 char	*reader(char *file);
 char	**assign(char *t_read);
 void	assign_ts(char **ts, char *file, int file_len);
+void	trim_ts(char **ts);
 void	assign_letters(char **ts);
 void	validator(char **ts);
 void	check_ts(char **ts);
