@@ -6,13 +6,13 @@
 #    By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/21 20:02:04 by Niko              #+#    #+#              #
-#    Updated: 2016/12/26 23:10:41 by Niko             ###   ########.fr        #
+#    Updated: 2016/12/27 13:03:40 by Niko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
-FLAGS = -fsanitize=address -O1 -fno-omit-frame-pointer -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 SRCS = srcs/main.c \
 	   srcs/reader.c \
