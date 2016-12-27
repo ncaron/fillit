@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/21 20:54:43 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/05 17:33:10 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/21 20:41:46 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/21 20:48:52 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ char	*reader(char *file)
 	int		file_len;
 
 	if ((fd = open(file, O_RDONLY)) == -1)
-		throw_error(2);
+		throw_error(1);
 	t_read = ft_strnew(BUF_SIZE);
 	file_len = read(fd, t_read, BUF_SIZE);
 	if ((fd = close(fd)) == -1)
-		throw_error(3);
+		throw_error(2);
 	return (t_read);
 }

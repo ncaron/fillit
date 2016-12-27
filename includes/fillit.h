@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/16 15:56:05 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/05 18:22:07 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/21 20:14:16 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/26 23:38:01 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,41 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# define I1 "#....#....#....#"
+# define I2 "####"
+# define J1 ".#....#...##"
+# define J2 "#....###"
+# define J3 "##...#....#"
+# define J4 "###....#"
+# define L1 "#....#....##"
+# define L2 "###..#"
+# define L3 "##....#....#"
+# define L4 "..#..###"
+# define O1 "##...##"
+# define S1 ".##..##"
+# define S2 "#....##....#"
+# define T1 "###...#"
+# define T2 ".#...##....#"
+# define T3 ".#...###"
+# define T4 "#....##...#"
+# define Z1 "##....##"
+# define Z2 ".#...##...#"
 
+char	*create_map(int size);
 char	*reader(char *file);
-char	**assign(char *t_read);
-void	assign_ts(char **ts, char *file, int file_len);
-void	trim_ts(char **ts);
+char	**assign(char *t_read, int file_len);
+char	**check_ts(char **tmp, int t_count, char **to_compare);
+char	**load_to_compare(void);
+char	**resize_pieces(char **tmp, int t_count, int size);
+int		check_piece(char *map, char *t, int piece_num);
+int		consecutive_letter(char *t);
+int		remove_piece(char *map, int piece_num);
+int		smallest_square(char **ts, int size);
+int		solve(char *map, char **ts);
+void	add_nl(char **ts);
 void	assign_letters(char **ts);
-void	validator(char **ts);
-void	check_ts(char **ts);
-void	check_conn(char **ts);
+void	assign_new_piece(char *tmp, char *t, int to_add);
+void	check_file(char **tmp);
+void	place_piece(char *map, char *t, int piece_num);
 void	throw_error(int code);
-void	init_map(char **ts);
 #endif

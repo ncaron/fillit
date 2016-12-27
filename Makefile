@@ -5,19 +5,21 @@
 #                                                     +:+ +:+         +:+      #
 #    By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/11/16 15:11:47 by Niko              #+#    #+#              #
-#    Updated: 2016/12/05 17:16:43 by Niko             ###   ########.fr        #
+#    Created: 2016/12/21 20:02:04 by Niko              #+#    #+#              #
+#    Updated: 2016/12/26 23:10:41 by Niko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -fsanitize=address -O1 -fno-omit-frame-pointer -Wall -Wextra -Werror
 
 SRCS = srcs/main.c \
 	   srcs/reader.c \
 	   srcs/assign.c \
 	   srcs/validator.c \
+	   srcs/solver.c \
+	   srcs/resize.c \
 	   srcs/map.c
 
 INCLUDES = fillit.h

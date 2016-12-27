@@ -5,25 +5,43 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/16 15:08:32 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/05 17:33:18 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/21 20:12:31 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/26 23:40:35 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
 
+/*
+** Launches the program.
+** While not solved, create a map, resize pieces and increase the size.
+*/
+
 int	main(int argc, char **argv)
 {
-	char *t_read;
-	char **ts;
+	char	*map;
+	char	**ts;
+	int		t_count;
+	int		size;
+	int		solved;
 
 	if (argc == 2)
 	{
-		t_read = reader(argv[1]);
-		ts = assign(t_read);
-		init_map(ts);
+		solved = 0;
+		ts = assign(reader(argv[1]), ft_strlen(reader(argv[1])));
+		t_count = 0;
+		while (ts[t_count])
+			t_count++;
+		size = smallest_square(ts, ft_int_sqrt(t_count * 4));
+		while (!solved)
+		{
+			map = create_map(size);
+			ts = resize_pieces(ts, t_count, size);
+			solved = solve(map, ts);
+			size++;
+		}
 	}
 	else
-		throw_error(1);
+		throw_error(3);
 	return (0);
 }

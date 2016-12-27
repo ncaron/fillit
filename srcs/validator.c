@@ -5,86 +5,115 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/04 19:25:29 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/05 17:33:04 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/21 20:21:59 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/23 03:46:13 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
 
 /*
-** Throws an error based of error code given and exits the program.
+** Throws an error based on the error code given and exits the program.
 */
 
 void	throw_error(int code)
 {
 	if (code == 1)
-		ft_putstr("TODO: usage");
+		ft_putendl("open() error");
 	else if (code == 2)
-		ft_putstr("open() error");
+		ft_putendl("close() error");
 	else if (code == 3)
-		ft_putstr("close() error");
+		ft_putendl("usage: ./fillit [FILE_NAME]");
 	else if (code == 4)
-		ft_putstr("error");
-	else
-		ft_putstr("Unknown error");
+		ft_putendl("error");
 	exit(-1);
 }
 
 /*
-** Checks if tetriminos have exactly 12 dots and 4 hashes.
+** Counts the number of dots, hashes and new lines for each piece.
+** Each piece requires 12 dots, 4 hashes and 4 new lines.
+** If a piece is invalid, throw error.
 */
 
-void	check_ts(char **ts)
+void	check_file(char **tmp)
 {
 	int i;
 
 	i = 0;
-	while (ts[i])
+	while (tmp[i])
 	{
-		if (ft_countchr(ts[i], '.') != 12 || ft_countchr(ts[i], '#') != 4 ||
-				ft_countchr(ts[i], '\n') != 4)
+		if (ft_countchr(tmp[i], '.') != 12 || ft_countchr(tmp[i], '#') != 4 ||
+						ft_countchr(tmp[i], '\n') != 4)
 			throw_error(4);
 		i++;
 	}
 }
 
 /*
-** Checks number of connections for the hashes.
-** If not 6 or 8, piece is not valid.
+** Creates an array of all possible valid Tetriminos to compare with input.
+** Returns the array of valid Tetriminos.
 */
 
-void	check_conn(char **ts)
+char	**load_to_compare(void)
 {
-	int i;
-	int j;
-	int count;
+	char **to_compare;
 
+	if (!(to_compare = (char**)malloc(sizeof(char*) * 20)))
+		return (NULL);
+	to_compare[0] = ft_strdup(I1);
+	to_compare[1] = ft_strdup(I2);
+	to_compare[2] = ft_strdup(J1);
+	to_compare[3] = ft_strdup(J2);
+	to_compare[4] = ft_strdup(J3);
+	to_compare[5] = ft_strdup(J4);
+	to_compare[6] = ft_strdup(L1);
+	to_compare[7] = ft_strdup(L2);
+	to_compare[8] = ft_strdup(L3);
+	to_compare[9] = ft_strdup(L4);
+	to_compare[10] = ft_strdup(O1);
+	to_compare[11] = ft_strdup(S1);
+	to_compare[12] = ft_strdup(S2);
+	to_compare[13] = ft_strdup(T1);
+	to_compare[14] = ft_strdup(T2);
+	to_compare[15] = ft_strdup(T3);
+	to_compare[16] = ft_strdup(T4);
+	to_compare[17] = ft_strdup(Z1);
+	to_compare[18] = ft_strdup(Z2);
+	to_compare[19] = NULL;
+	return (to_compare);
+}
+
+/*
+** Compares passed in Tetriminos against a list of valid Tetriminos.
+** If passed in Tetrimino is not valid, throw and error.
+** If it is valid, add it to an array of valid Tetriminos.
+** Returns the array of valid Tetriminos.
+*/
+
+char	**check_ts(char **tmp, int t_count, char **to_compare)
+{
+	char	**ts;
+	int		i;
+	int		j;
+
+	if (!(ts = (char**)malloc(sizeof(char*) * (t_count + 1))))
+		return (NULL);
 	i = 0;
-	while (ts[i])
+	while (tmp[i])
 	{
-		count = 0;
+		ft_replace_chr(tmp[i], '\n', '.');
 		j = 0;
-		while (ts[i][j])
+		while (to_compare[j])
 		{
-			if (ts[i][j] == '#' && ts[i][j + 1] == '#')
-				count += 2;
-			if (ts[i][j] == '#' && i + 5 < 20 && ts[i][j + 5] == '#')
-				count += 2;
+			if (ft_strstr(tmp[i], to_compare[j]))
+				break ;
+			if (j == 18)
+				throw_error(4);
 			j++;
 		}
-		if (count != 6 && count != 8)
-			throw_error(4);
+		ts[i] = ft_strdup(to_compare[j]);
 		i++;
 	}
-}
-
-/*
-** Launches the validator functions.
-*/
-
-void	validator(char **ts)
-{
-	check_ts(ts);
-	check_conn(ts);
+	ts[i] = NULL;
+	return (ts);
 }

@@ -5,104 +5,94 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/04 15:51:22 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/05 18:46:03 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/21 21:06:18 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/26 23:11:35 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fillit.h"
 
 /*
-** Assigns each tetrimino in a tetrimino array.
+** Allocates memory to hold all the pieces in an array.
+** 1 is added to t_count in case file is not of the correct format.
+** Assigns each Tetrimino to a temporary array.
+** Returns an array of Tetriminos.
 */
 
-void	assign_ts(char **ts, char *file, int file_len)
+char	**assign(char *t_read, int file_len)
 {
-	int i;
-	int j;
-	int len;
+	char	**tmp;
+	char	**ts;
+	int		t_count;
+	int		i;
+	int		j;
 
+	t_count = (file_len / 20) + 1;
+	if (!(tmp = (char**)malloc(sizeof(char*) * (t_count + 1))))
+		return (NULL);
 	i = 0;
 	j = 0;
-	while (i <= file_len)
+	while (i <= file_len && j < t_count)
 	{
 		if (file_len - i < 20)
-			len = file_len - i;
+			tmp[j] = ft_strsub(t_read, i, file_len - i);
 		else
-			len = 20;
-		ts[j] = ft_strsub(file, i, len);
+			tmp[j] = ft_strsub(t_read, i, 20);
 		j++;
 		i += 21;
 	}
-	ts[j] = NULL;
+	tmp[j] = NULL;
+	check_file(tmp);
+	ts = check_ts(tmp, t_count, load_to_compare());
+	add_nl(ts);
+	return (ts);
 }
 
 /*
-** Removes the leading and trailing dots.
+** Adds a new line to the appropriate place in the piece.
 */
 
-void	trim_ts(char **ts)
+void	add_nl(char **ts)
 {
 	int i;
-	int start;
-	int end;
-	int len;
+	int j;
+	int count;
 
 	i = 0;
 	while (ts[i])
 	{
-		start = 0;
-		end = ft_strlen(ts[i]) - 1;
-		while (!ft_isupper(ts[i][start]))
-			start++;
-		while (!ft_isupper(ts[i][end]))
-			end--;
-		len = end - start + 1;
-		ts[i] = ft_strsub(ts[i], start, len);
+		count = 0;
+		j = 0;
+		while (ts[i][j])
+		{
+			if ((j % 4) == 0 && j != 0)
+			{
+				ts[i][j + count] = '\n';
+				count++;
+			}
+			j++;
+		}
 		i++;
 	}
+	assign_letters(ts);
 }
 
 /*
-** Changes hashes to letters.
-** A for the first piece, B for the second, etc.
+** Changes hashes to the corresponding letter.
+** A for the first Tetrimino, B for the second and so on.
 */
 
 void	assign_letters(char **ts)
 {
-	int		i;
 	char	letter;
+	int		i;
 
 	letter = 'A';
 	i = 0;
 	while (ts[i])
 	{
 		ft_replace_chr(ts[i], '#', letter);
-		ft_replace_chr(ts[i], '\n', '.');
 		letter++;
 		i++;
 	}
-}
-
-/*
-** Allocates enough memory to hold all the pieces in an array.
-** Returns an array of tetriminos.
-*/
-
-char	**assign(char *t_read)
-{
-	int		t_count;
-	int		file_len;
-	char	**ts;
-
-	file_len = ft_strlen(t_read);
-	t_count = (file_len / 20) + 1;
-	ts = (char**)malloc(sizeof(char*) * (t_count + 1));
-	if (!ts)
-		return (NULL);
-	assign_ts(ts, t_read, file_len);
-	validator(ts);
-	assign_letters(ts);
-	trim_ts(ts);
-	return (ts);
 }

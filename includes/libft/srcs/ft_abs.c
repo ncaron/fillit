@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   ft_abs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/23 03:46:21 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/26 21:26:15 by Niko             ###   ########.fr       */
+/*   Created: 2016/12/13 17:11:38 by Niko              #+#    #+#             */
+/*   Updated: 2016/12/13 17:12:25 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
-
 /*
-** Creates a map based on the size passed in.
+** Returns the absolute value of a number.
 */
 
-char	*create_map(int size)
+int	ft_abs(int n)
 {
-	char	*map;
-	int		full_size;
-	int		i;
-
-	full_size = (size * size) + size;
-	map = ft_strnew(full_size);
-	i = 1;
-	while (i < full_size)
-	{
-		if (i % (size + 1) == 0 && i != 0)
-			map[i - 1] = '\n';
-		else
-			map[i - 1] = '.';
-		i++;
-	}
-	return (map);
+	if (n < 0)
+		return (n * -1);
+	else
+		return (n);
 }
