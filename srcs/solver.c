@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/23 23:00:33 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/26 23:27:33 by Niko             ###   ########.fr       */
+/*   Updated: 2017/01/12 21:00:48 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		remove_piece(char *map, int piece_num)
 ** print the map and return 1.
 */
 
-int		solve(char *map, char **ts)
+int		attempt_solve(char *map, char **ts)
 {
 	int i;
 	int j;
@@ -122,6 +122,37 @@ int		solve(char *map, char **ts)
 	}
 	if (ts[j])
 		return (0);
-	ft_putendl(map);
 	return (1);
+}
+
+/*
+** Launches the solving process of the program.
+** If solving fails, resize the pieces/map and try again.
+*/
+
+void	solve(char **ts, char **map)
+{
+	char	**tmp;
+	int		t_count;
+	int		size;
+	int		solved;
+
+	t_count = 0;
+	solved = 0;
+	while (ts[t_count])
+		t_count++;
+	size = smallest_square(ts, ft_int_sqrt(t_count * 4));
+	while (!solved)
+	{
+		if (map != NULL)
+			ft_strdel(map);
+		*map = create_map(size);
+		tmp = ft_arrdup(ts);
+		ft_arrdel(ts);
+		ts = resize_pieces(tmp, t_count, size);
+		ft_arrdel(tmp);
+		solved = attempt_solve(*map, ts);
+		size++;
+	}
+	ft_arrdel(ts);
 }

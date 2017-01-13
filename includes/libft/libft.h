@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/02 19:54:32 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/13 17:13:15 by Niko             ###   ########.fr       */
+/*   Updated: 2017/01/12 21:13:02 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void(*f)(t_list *elem));
 void			ft_sort_int_arr(int *arr, size_t size);
 void			ft_replace_chr(char *s, char c1, char c2);
+void			ft_arrdel(char **s);
 void			*ft_memset(void *b, int c, size_t len);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
@@ -90,4 +91,5 @@ char			*ft_strstr(const char *big, const char *little);
 char			*ft_strnstr(const char *big, const char *little, size_t len);
 char			*ft_itoa_base(int value, int base);
 char			**ft_strsplit(char const *s, char c);
+char			**ft_arrdup(char **a);
 #endif

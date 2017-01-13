@@ -6,13 +6,15 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 17:11:38 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/13 17:12:25 by Niko             ###   ########.fr       */
+/*   Updated: 2017/01/12 16:32:24 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 ** Returns the absolute value of a number.
 */
+
+#include "../libft.h"
 
 int	ft_abs(int n)
 {

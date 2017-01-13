@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/21 20:21:59 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/23 03:46:13 by Niko             ###   ########.fr       */
+/*   Updated: 2017/01/12 21:05:44 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,10 @@ char	**check_ts(char **tmp, int t_count, char **to_compare)
 				throw_error(4);
 			j++;
 		}
-		ts[i] = ft_strdup(to_compare[j]);
-		i++;
+		ts[i++] = ft_strdup(to_compare[j]);
 	}
 	ts[i] = NULL;
+	ft_arrdel(to_compare);
+	ft_arrdel(tmp);
 	return (ts);
 }

@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_arrdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/21 20:12:31 by Niko              #+#    #+#             */
-/*   Updated: 2017/01/12 20:57:38 by Niko             ###   ########.fr       */
+/*   Created: 2017/01/12 16:21:49 by Niko              #+#    #+#             */
+/*   Updated: 2017/01/12 20:19:30 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fillit.h"
-
 /*
-** Launches the program.
-** Creates necessary variables and passes them to the solve function.
+** Takes in an array of strings and frees everything.
 */
 
-int	main(int argc, char **argv)
-{
-	char	**ts;
-	char	*t_read;
-	char	*map;
+#include "../libft.h"
 
-	if (argc == 2)
+void	ft_arrdel(char **s)
+{
+	int i;
+
+	i = 0;
+	while (s[i])
 	{
-		map = NULL;
-		t_read = reader(argv[1]);
-		ts = assign(t_read, ft_strlen(t_read));
-		solve(ts, &map);
-		ft_strdel(&t_read);
-		ft_putendl(map);
-		ft_strdel(&map);
+		ft_strdel(&s[i]);
+		i++;
 	}
-	else
-		throw_error(3);
-	return (0);
+	free(s);
+	s = NULL;
 }

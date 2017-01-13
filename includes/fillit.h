@@ -6,7 +6,7 @@
 /*   By: Niko <niko.caron90@gmail.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/21 20:14:16 by Niko              #+#    #+#             */
-/*   Updated: 2016/12/26 23:38:01 by Niko             ###   ########.fr       */
+/*   Updated: 2017/01/12 20:57:05 by Niko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int		check_piece(char *map, char *t, int piece_num);
 int		consecutive_letter(char *t);
 int		remove_piece(char *map, int piece_num);
 int		smallest_square(char **ts, int size);
-int		solve(char *map, char **ts);
+int		attempt_solve(char *map, char **ts);
+void	solve(char **ts, char **map);
 void	add_nl(char **ts);
 void	assign_letters(char **ts);
 void	assign_new_piece(char *tmp, char *t, int to_add);
